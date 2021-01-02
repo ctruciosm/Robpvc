@@ -30,64 +30,6 @@ SEXP robRmRcpp(arma::mat sigma1, arma::mat y, double Lim, NumericVector aux){
 
 
 
-//' @noRd
-//' @useDynLib RobGARCHBoot
-// [[Rcpp::export]]
-SEXP grid_RCPP(NumericVector y, double sigmaR){
-  NumericVector coeff(2),vi(2);
-  double alfa1, beta1;
-  double alfa1min = 0.005,  alfa1max = 0.2, beta1min = 0.65,  beta1max = 0.98,  nalfa1 = 5,  nbeta1 = 5;
-  double ml = 100000000, nml;
-  double lmalfa1 = (alfa1max-alfa1min)/nalfa1;
-  double lmbeta1 = (beta1max-beta1min)/nbeta1;
-  Rcpp::Function ROBUSTGARCHloss_RCPP("ROBUSTGARCHloss_RCPP");
-  
-  for(int nj=0; nj<nalfa1; nj++){
-    for(int nk=0; nk<nbeta1; nk++){
-      alfa1 = alfa1min+nj*lmalfa1;
-      beta1 = beta1min+nk*lmbeta1; 
-      
-      if(alfa1+beta1<0.999){
-        coeff[0] = alfa1;
-        coeff[1] = beta1;
-        nml=Rcpp::as<double>(ROBUSTGARCHloss_RCPP(coeff,y,sigmaR));
-        if (nml<ml){
-          vi[0] = coeff[0];
-          vi[1] = coeff[1];
-          ml=nml;
-        }
-      }
-    }
-  }
-  return(vi);
-}
-
-
-// [[Rcpp::depends(RcppArmadillo)]]
-//' @export
-//' @useDynLib RobGARCHBoot
-// [[Rcpp::export]]
-SEXP ROBUSTGARCHloss_RCPP(NumericVector theta, NumericVector r, double sigma2){
-  int n = r.size(), k = 3;
-  NumericVector h(n), J(n), auxr(n), y(n);
-  Rcpp::Function mean("mean");
-  h[0] = sigma2;
-  J[0] = r[0]/sqrt(h[0]);
-  
-  for(int i=1; i<n; i++){
-    if(std::abs(J[i-1])<k){
-      h[i]= sigma2*(1-theta[0]-theta[1])+ theta[0]*pow(r[i-1],2)+ theta[1]*h[i-1];
-    } else{
-      h[i]= sigma2*(1-theta[0]-theta[1])+ theta[0]*1.005018*h[i-1]+ theta[1]*h[i-1];
-    }
-    J[i] = r[i]/sqrt(h[i]);
-  }
-  auxr = ifelse(r==0,r+0.00001,r);
-  y = log(pow(auxr,2)/h);
-  return(wrap(mean(-y + 0.8260*5*log(1+exp(y)/2))));
-}
-
-
 // [[Rcpp::depends(RcppArmadillo)]]
 //' @noRd
 //' @useDynLib Robpvc
