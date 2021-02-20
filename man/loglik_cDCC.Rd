@@ -20,7 +20,7 @@ Qbar matrix (obtained from the Robust_cDCC function)
 Devolatilized returns
 }
   \item{sigma}{
-Sigma parameter. See; Boudt et al. (2013)
+Sigma parameter (which is computed inside the Robust_cDCC function). In a three-dimensional case this value is equal to 0.8309765.
 }
 }
 \details{

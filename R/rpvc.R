@@ -87,9 +87,14 @@ Robust_cDCC = function(r){
     e[,i] = r[,i]/vol[1:n,i]
   }
   
-  integrand = function(x) { (p+4)*x/(2+x)*dchisq(x,p) }
-  sigma_ = p/integrate(integrand,0,Inf)$value
-  
+  if (p == 2) sigma_ = 0.8257925
+  if (p == 3) sigma_ = 0.8309765
+  if (p == 4) sigma_ = 0.8384375
+  if (p == 5) sigma_ = 0.8466635
+  if (p > 5){
+    integrand = function(x) { (p+4)*x/(2+x)*dchisq(x,p) }
+    sigma_ = p/integrate(integrand,0,Inf)$value
+  }
   Qbarra = Q_bar(e)
   parini = gridcDCC(Qbarra,e, sigma_)
   
@@ -102,6 +107,7 @@ Robust_cDCC = function(r){
 }
 
 
+#' @export
 #' @noRd
 #' @import Rcpp RcppArmadillo
 #' @importFrom RobGARCHBoot fitted_Vol

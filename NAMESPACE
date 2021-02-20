@@ -2,6 +2,7 @@
 
 export(Robpvc)
 export(Robust_cDCC)
+export(fitted_cDCC)
 export(loglik_cDCC)
 export(rpvc_cov)
 import(Rcpp)
