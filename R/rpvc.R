@@ -154,10 +154,80 @@ rpvc_cov = function(rtn, m = 10, c = 0.99, k = 1){
     coeff_AUX = Robust_cDCC(X)
     coeff = coeff_AUX[[1]]
     Qbarra = coeff_AUX[[2]]
-    H = fitted_cDCC(X, Qbar = Qbarra, params = coeff)
-    Hhat = M1%*%as.matrix(H[[n+1]])%*%t(M1) + m1y$COV%*%M2%*%t(M2) + M2%*%t(M2)%*%m1y$COV%*%M1%*%t(M1)  
+    Hdcc = fitted_cDCC(X, Qbar = Qbarra, params = coeff)
+    Hhat = M1%*%as.matrix(Hdcc[[n+1]])%*%t(M1) + m1y$COV%*%M2%*%t(M2) + M2%*%t(M2)%*%m1y$COV%*%M1%*%t(M1)  
   }
   return(Hhat)
+}
+
+
+#' @export
+#' @import Rcpp
+#' @importFrom DetMCD DetMCD
+#' @importFrom stats quantile
+#' @importFrom utils tail
+#' @importFrom metRology qt.scaled
+#' @importFrom MASS fitdistr
+#' @importFrom Matrix nearPD
+rpvc_VaR = function(rtn, m = 10, c = 0.99, k = 1, weights = NULL, alpha = c(0.01, 0.05)){
+  N = ncol(rtn)
+  nobs = nrow(rtn)
+  if(is.null(weights)) weights = rep(1/N, N)
+  mu = apply(rtn,2,mean)%*%weights
+  
+  Y = scale(as.matrix(rtn), scale=FALSE)
+  m1y = Robpvc(Y, m, c)
+  M1 = m1y$vectors[,1:k]
+  M2 = m1y$vectors[,-c(1:k)]
+  X = Y%*%M1 
+  
+  vp = rp = ep = c()
+  if (k == 1){
+    coeff = ROBUSTGARCH(X)
+    sigma2 = fitted_Vol(coeff, X)^2
+    for (i in 1:nobs){
+      HAUX = sigma2[i]*M1%*%t(M1) + m1y$COV%*%M2%*%t(M2) + M2%*%t(M2)%*%m1y$COV%*%M1%*%t(M1) 
+      HAUX = 0.5*(HAUX+t(HAUX))
+      vp[i] = weights%*%HAUX%*%weights
+      
+      if(vp[i]<=0){
+        HAUX = as.matrix(nearPD(HAUX, doDykstra = FALSE, keepDiag = TRUE, ensureSymmetry = TRUE , maxit = 100)$mat)
+        vp[i] = weights%*%HAUX%*%weights
+      }
+      rp[i] = Y[i,]%*%weights
+      ep[i] = rp[i]/sqrt(vp[i])
+    }
+    HAUX = sigma2[nobs+1]*M1%*%t(M1) + m1y$COV%*%M2%*%t(M2) + M2%*%t(M2)%*%m1y$COV%*%M1%*%t(M1) 
+    HAUX = 0.5*(HAUX+t(HAUX))
+    s2p = weights%*%HAUX%*%weights
+  } else{
+    coeff_AUX = Robust_cDCC(X)
+    coeff = coeff_AUX[[1]]
+    Qbarra = coeff_AUX[[2]]
+    Hdcc = fitted_cDCC(X, Qbar = Qbarra, params = coeff)
+    for (i in 1:nobs){
+      HAUX = M1%*%as.matrix(Hdcc[[i]])%*%t(M1) + m1y$COV%*%M2%*%t(M2) + M2%*%t(M2)%*%m1y$COV%*%M1%*%t(M1)  
+      HAUX = 0.5*(HAUX+t(HAUX))
+      vp[i] = weights%*%HAUX%*%weights
+      
+      if(vp[i]<=0){
+        HAUX = as.matrix(nearPD(HAUX, doDykstra = FALSE, keepDiag = TRUE, ensureSymmetry = TRUE , maxit = 100)$mat)
+        vp[i] = weights%*%HAUX%*%weights
+      }
+      rp[i] = Y[i,]%*%weights
+      ep[i] = rp[i]/sqrt(vp[i])
+    }
+    HAUX = M1%*%as.matrix(Hdcc[[nobs+1]])%*%t(M1) + m1y$COV%*%M2%*%t(M2) + M2%*%t(M2)%*%m1y$COV%*%M1%*%t(M1)  
+    HAUX = 0.5*(HAUX+t(HAUX))
+    s2p = weights%*%HAUX%*%weights
+  }
+
+  v = try(fitdistr(ep, "t")$estimate[3])
+  while("try-error" %in% class(v)){
+    v = try(fitdistr(sample(ep,nobs,replace=TRUE), "t")$estimate[3])
+  }
+  VaR = qt.scaled(alpha, v, mean = 0, sd = 1)*as.numeric(sqrt(s2p)) + as.numeric(mu)
+  return(VaR)
 }
 
 
