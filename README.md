@@ -5,7 +5,7 @@ R implementation of the Robust Principal Volatility Components procedure of Truc
 ## References
 
 - Hu, Yu-Pin, and Ruey S. Tsay. "Principal volatility component analysis." Journal of Business & Economic Statistics 32.2 (2014): 153-164.
-Li, Weiming, et al. "Modeling multivariate volatilities via latent common factors." Journal of Business & Economic Statistics 34.4 (2016): 564-573.
+- Li, Weiming, Gao, Jing, Li, Kunpeng, and Yao, Qiwei. (2016). "Modeling multivariate volatilities via latent common factors". Journal of Business & Economic Statistics (2016): 34.4 (2016): 564-573.
 - Trucíos, Carlos, Luiz K. Hotta, and Esther Ruiz. "Robust bootstrap forecast densities for GARCH returns and volatilities." Journal of Statistical Computation and Simulation 87.16 (2017): 3152-3174.
 - Trucíos, Carlos, Luiz K. Hotta, and Esther Ruiz. "Robust bootstrap densities for dynamic conditional correlations: implications for portfolio selection and value-at-risk." Journal of Statistical Computation and Simulation 88.10 (2018): 1976-2000.
 - Trucíos, Carlos, Luiz K. Hotta, and Pedro L. Valls Pereira. "On the robustness of the principal volatility components." Journal of Empirical Finance 52 (2019): 201-219.
