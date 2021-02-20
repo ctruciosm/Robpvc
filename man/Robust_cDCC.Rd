@@ -4,7 +4,7 @@
 Robust cDCC Estimator
 }
 \description{
-Robust cDCC estimator as in Trucíos et at. (2018), which is a slight modification of the procedure of Boud et al. (2013).
+Robust cDCC estimator of Boud et al. (2013) with the modification introduced by Trucíos et at. (2018).
 }
 \usage{
 Robust_cDCC(r)

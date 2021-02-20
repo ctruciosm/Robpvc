@@ -1,18 +1,3 @@
-#' Robust Principal Volatility Components
-#'
-#' Estimates the principal volatility components in a robust way
-#'
-#' @param rtn Matrix of time series data
-#' @param m lag parameter, by default m = 10
-#' @param c threshold value, by default c = 0.99 which means that the observation with largest 1 percent Mahalanobis distance are considered as extreme observations.
-#'
-#' @return None
-#'
-#' @examples
-#' \donttest{
-#' Robpvc(toyexampledata)
-#' }
-#'
 #' @export
 #' @import Rcpp RcppArmadillo
 #' @importFrom DetMCD DetMCD
@@ -139,11 +124,34 @@ fitted_cDCC = function(r, Qbar, params){
   for(j in 1:(n+1)){
     H[[j]] = diag(vol[j,])%*%R[,,j]%*%diag(vol[j,])
   }
-  
   return(H)
 }
 
 
-
+#' @export
+#' @import Rcpp RcppArmadillo
+#' @importFrom DetMCD DetMCD
+#' @importFrom stats quantile
+#' @importFrom utils tail
+rpvc_cov = function(rtn, m = 10, c = 0.99, k = 1){
+  Y = scale(as.matrix(rtn), scale=FALSE)
+  n = nrow(Y)
+  m1y = Robpvc(Y, m, c)
+  M1 = m1y$vectors[,1:k]
+  M2 = m1y$vectors[,-c(1:k)]
+  X = Y%*%M1 
+  if (k == 1){
+    coeff = ROBUSTGARCH(X)
+    sigma2 = tail(fitted_Vol(coeff, X),1)^2
+    Hhat = sigma2*M1%*%t(M1) + m1y$COV%*%M2%*%t(M2) + M2%*%t(M2)%*%m1y$COV%*%M1%*%t(M1)  
+  } else{
+    coeff_AUX = Robust_cDCC(X)
+    coeff = coeff_AUX[[1]]
+    Qbarra = coeff_AUX[[2]]
+    H = fitted_cDCC(X, Qbar = Qbarra, params = coeff)
+    Hhat = M1%*%as.matrix(H[[n+1]])%*%t(M1) + m1y$COV%*%M2%*%t(M2) + M2%*%t(M2)%*%m1y$COV%*%M1%*%t(M1)  
+  }
+  return(Hhat)
+}
 
 

@@ -2,10 +2,10 @@ Package: Robpvc
 Type: Package
 Title: Robust Principal Volatility Components
 Version: 0.1.0
-Date: 2021-01-10
+Date: 2021-02-20
 Author: Carlos Trucios
 Maintainer: Carlos Trucios <carlos.trucios@facc.ufrj.br>
-Description: Estimate the principal volatility components in a robust way using the procedure of Trucios et al. (2019) <DOI:10.1016/j.jempfin.2019.03.006>.
+Description: Estimate the principal volatility components in a robust way using the procedure of Trucios, Hotta and Valls (2019) <DOI:10.1016/j.jempfin.2019.03.006>.
 Encoding: UTF-8
 License: GPL (>= 2)
 Depends: R (>= 3.6.0), RobGARCHBoot

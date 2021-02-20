@@ -1,26 +1,26 @@
 \name{loglik_cDCC}
 \alias{loglik_cDCC}
 \title{
-Loss function used in cDCC robust estimation.
+Loss function used in the cDCC robust estimation.
 }
 \description{
-Loss function used in cDCC robust estimation.
+Loss function used in the cDCC robust estimation.
 }
 \usage{
 loglik_cDCC(par, Qb, s, sigma)
 }
 \arguments{
   \item{par}{
-teste
+Two-dimensional cDCC vector parameters 
 }
   \item{Qb}{
-teste
+Qbar matrix (obtained from the Robust_cDCC function)
 }
   \item{s}{
-teste
+Devolatilized returns
 }
   \item{sigma}{
-teste
+Sigma parameter. See; Boudt et al. (2013)
 }
 }
 \details{

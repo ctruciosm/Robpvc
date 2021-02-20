@@ -1,4 +1,5 @@
 #include<RcppArmadillo.h>
+#include<Rcpp.h>
 #include<Rmath.h>
 
 using namespace Rcpp;
@@ -6,6 +7,7 @@ using namespace Rcpp;
 
 // [[Rcpp::depends(RcppArmadillo)]]
 //' @noRd
+//' @import Rcpp RcppArmadillo
 //' @useDynLib Robpvc
 // [[Rcpp::export]]
 SEXP robRmRcpp(arma::mat sigma1, arma::mat y, double Lim, NumericVector aux){
@@ -32,6 +34,7 @@ SEXP robRmRcpp(arma::mat sigma1, arma::mat y, double Lim, NumericVector aux){
 
 // [[Rcpp::depends(RcppArmadillo)]]
 //' @noRd
+//' @import Rcpp RcppArmadillo
 //' @useDynLib Robpvc
 // [[Rcpp::export]]
 SEXP gridcDCC(arma::mat Qb,arma::mat s, double sigma){
@@ -68,6 +71,7 @@ SEXP gridcDCC(arma::mat Qb,arma::mat s, double sigma){
 //' @export
 //' @noRd
 //' @useDynLib Robpvc
+//' @import Rcpp RcppArmadillo
 // [[Rcpp::export]]
 SEXP loglik_cDCC(arma::vec par,arma::mat Qb,arma::mat s, double sigma){
   int T = s.n_rows;
@@ -107,6 +111,7 @@ SEXP loglik_cDCC(arma::vec par,arma::mat Qb,arma::mat s, double sigma){
 // [[Rcpp::depends(RcppArmadillo)]]
 //' @noRd
 //' @useDynLib Robpvc
+//' @import Rcpp RcppArmadillo
 // [[Rcpp::export]]
 SEXP cor_cDCC(arma::vec par,arma::mat Qb,arma::mat s){
   int T = s.n_rows;
