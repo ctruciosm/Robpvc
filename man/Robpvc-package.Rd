@@ -5,7 +5,7 @@
   Robust Princial Volatility Components
 }
 \description{
-Principal volatility components and one-step-ahead conditional covariance matrix in a robust-to-outliers way as in Trucíos et al. (2019). The packages also implements the robust cDCC (Dynamic Conditional Correlation) estimator of Boudt et al. (2013) with the modification introduced by Trucíos et at. (2018).
+Principal volatility components and one-step-ahead conditional covariance matrix in a robust-to-outliers way as in Trucíos et al. (2019). The package also implements the robust cDCC (Dynamic Conditional Correlation) estimator of Boudt et al. (2013) with the modification introduced by Trucíos et al. (2018).
 }
 \details{
 This package provides a robust procedure to obtain principal volatility components. Aditionally, the conditional covariance matrix obtained via robust principal volatility components along with the robust GARCH/cDCC procedure of Boudt et al. (2013) with the modification introduced by Trucíos et at. (2017, 2018) is also implemented.
