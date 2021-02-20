@@ -2,14 +2,14 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @noRd
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 #' @useDynLib Robpvc
 robRmRcpp <- function(sigma1, y, Lim, aux) {
     .Call('_Robpvc_robRmRcpp', PACKAGE = 'Robpvc', sigma1, y, Lim, aux)
 }
 
 #' @noRd
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 #' @useDynLib Robpvc
 gridcDCC <- function(Qb, s, sigma) {
     .Call('_Robpvc_gridcDCC', PACKAGE = 'Robpvc', Qb, s, sigma)
@@ -18,14 +18,14 @@ gridcDCC <- function(Qb, s, sigma) {
 #' @export
 #' @noRd
 #' @useDynLib Robpvc
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 loglik_cDCC <- function(par, Qb, s, sigma) {
     .Call('_Robpvc_loglik_cDCC', PACKAGE = 'Robpvc', par, Qb, s, sigma)
 }
 
 #' @noRd
 #' @useDynLib Robpvc
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 cor_cDCC <- function(par, Qb, s) {
     .Call('_Robpvc_cor_cDCC', PACKAGE = 'Robpvc', par, Qb, s)
 }

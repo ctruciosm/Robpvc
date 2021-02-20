@@ -1,5 +1,5 @@
 #' @export
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 #' @importFrom DetMCD DetMCD
 #' @importFrom stats quantile
 Robpvc = function (rtn, m = 10, c = 0.99) {
@@ -72,7 +72,7 @@ Q_bar = function(s, k = 30, gamma = 0.95){
 
 
 #' @export
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 #' @importFrom stats constrOptim pchisq qchisq integrate dchisq
 #' @importFrom RobGARCHBoot ROBUSTGARCH fitted_Vol
 Robust_cDCC = function(r){
@@ -109,7 +109,7 @@ Robust_cDCC = function(r){
 
 #' @export
 #' @noRd
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 #' @importFrom RobGARCHBoot fitted_Vol
 fitted_cDCC = function(r, Qbar, params){
   Dim = dim(r)
@@ -135,7 +135,7 @@ fitted_cDCC = function(r, Qbar, params){
 
 
 #' @export
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 #' @importFrom DetMCD DetMCD
 #' @importFrom stats quantile
 #' @importFrom utils tail

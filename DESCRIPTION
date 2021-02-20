@@ -9,7 +9,7 @@ Description: Estimate the principal volatility components in a robust way using 
 Encoding: UTF-8
 License: GPL (>= 2)
 Depends: R (>= 3.6.0), RobGARCHBoot
-Imports: Rcpp (>= 1.0.3), DetMCD, RcppArmadillo
+Imports: Rcpp (>= 1.0.3), DetMCD
 LinkingTo: Rcpp, RcppArmadillo
 LazyData: true
 RoxygenNote: 7.1.1
