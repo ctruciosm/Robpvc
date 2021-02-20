@@ -10,6 +10,14 @@ R implementation of the Robust Principal Volatility Components procedure of Truc
 - Trucíos, Carlos, Luiz K. Hotta, and Esther Ruiz. "Robust bootstrap densities for dynamic conditional correlations: implications for portfolio selection and value-at-risk." Journal of Statistical Computation and Simulation 88.10 (2018): 1976-2000.
 - Trucíos, Carlos, Luiz K. Hotta, and Pedro L. Valls Pereira. "On the robustness of the principal volatility components." Journal of Empirical Finance 52 (2019): 201-219.
 
+## Instalation
+
+Robpvc is not available on CRAN yet, but you can install this version using these commands:
+
+install.packages("devtools")
+
+devtools::install_github("ctruciosm/Robpvc")
+
 ## Abstract of the RPVC paper
 
 In this paper, we analyse the recent principal volatility components analysis procedure. The procedure overcomes several difficulties in modelling and forecasting the conditional covariance matrix in large dimensions arising from the curse of dimensionality. We show that outliers have a devastating effect on the construction of the principal volatility components and on the forecast of the conditional covariance matrix and consequently in economic and financial applications based on this forecast. We propose a robust procedure and analyse its finite sample properties by means of Monte Carlo experiments and also illustrate it using empirical data. The robust procedure outperforms the classical method in simulated and empirical data. [https://www.sciencedirect.com/science/article/abs/pii/S0927539819300386]
