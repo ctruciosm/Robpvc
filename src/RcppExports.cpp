@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // robRmRcpp
 SEXP robRmRcpp(arma::mat sigma1, arma::mat y, double Lim, NumericVector aux);
 RcppExport SEXP _Robpvc_robRmRcpp(SEXP sigma1SEXP, SEXP ySEXP, SEXP LimSEXP, SEXP auxSEXP) {
